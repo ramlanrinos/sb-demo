@@ -47,4 +47,9 @@ public class UserController {
         userData.setEmail(userEntity.getEmail());
         return userRepository.save(userData);
     }
+
+    @DeleteMapping("/{id}")
+    public void deleteUser(@PathVariable Long id) {
+        userRepository.deleteById(id);
+    }
 }
