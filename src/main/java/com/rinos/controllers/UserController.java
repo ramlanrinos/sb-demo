@@ -1,6 +1,7 @@
 package com.rinos.controllers;
 
 import com.rinos.entity.UserEntity;
+import com.rinos.exception.ResourceNotFoundException;
 import com.rinos.models.User;
 import com.rinos.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +36,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public Optional<UserEntity> getUser(@PathVariable Long id) {
-        return userRepository.findById(id);
+    public UserEntity getUser(@PathVariable Long id) {
+        return userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not found with id " + id));
     }
 }
