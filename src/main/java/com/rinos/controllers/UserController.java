@@ -5,6 +5,7 @@ import com.rinos.exception.ResourceNotFoundException;
 import com.rinos.models.User;
 import com.rinos.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
@@ -49,7 +50,9 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteUser(@PathVariable Long id) {
-        userRepository.deleteById(id);
+    public ResponseEntity<Object> deleteUser(@PathVariable Long id) {
+        UserEntity userData = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not found with id " + id));
+        userRepository.delete(userData);
+        return ResponseEntity.ok().build();
     }
 }
