@@ -15,7 +15,7 @@ public class SecurityConfiguration {
         http.authorizeHttpRequests(authz ->
                 authz.requestMatchers("api/users/**").authenticated()
                         .requestMatchers("/").permitAll()
-        );
+        ).formLogin(form -> form.permitAll());
         return http.build();
     }
 }
